@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaga: Vendedor Interno (CLT) - Moby Representações</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Black, Orange, and Light Gray -->
+    <!-- Application Structure Plan: A single-page application with a top navigation bar for smooth scrolling to distinct sections: "A Vaga", "Perfil", "Responsabilidades", and "Remuneração". This structure breaks down the job ad into logical, digestible chunks, improving readability over a single block of text. The key interaction is a dynamic remuneration calculator with a slider and a Chart.js bar chart for exploring potential earnings. This task-oriented (understanding the job offer) and sectioned approach was chosen for superior usability and engagement compared to the original linear text format. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Core requirements (experience, skills). -> Goal: Inform. -> Viz/Presentation: Icon-based list (HTML/Unicode). -> Interaction: None. -> Justification: Icons and short text improve scannability. -> Library/Method: HTML/Tailwind.
+        - Report Info: Job responsibilities. -> Goal: Inform. -> Viz/Presentation: Icon-based list (HTML/Unicode). -> Interaction: None. -> Justification: Visually separates tasks for clarity. -> Library/Method: HTML/Tailwind.
+        - Report Info: Compensation package (fixed salary, benefits, progressive commission). -> Goal: Explore/Compare. -> Viz/Presentation: Bar chart and text summary. -> Interaction: A slider adjusts "sales performance," which dynamically updates the commission on the chart and the total estimated earnings text. -> Justification: Transforms a static salary number into an engaging, interactive tool that demonstrates the "progressive commission" benefit, a key selling point of the job. -> Library/Method: Chart.js/Canvas.
+        - Report Info: Work schedule and other details. -> Goal: Inform. -> Viz/Presentation: Simple, clean text cards. -> Interaction: None. -> Justification: Clear and direct presentation for factual information. -> Library/Method: HTML/Tailwind.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4; /* Light gray background */
+            color: #1a1a1a; /* Dark text for contrast */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link:hover {
+            color: #f97316; /* Orange-500 */
+            border-bottom-color: #f97316; /* Orange-500 */
+        }
+        .card {
+            background-color: #FFFFFF;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .cta-button {
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Por favor, certifique-se de que 'logo-moby.png' está na mesma pasta que este arquivo HTML -->
+            <img src="logo-moby.png" alt="Logo Moby Representações" class="h-10 w-auto">
+            <div class="hidden md:flex space-x-8">
+                <a href="#vaga" class="text-gray-600 font-medium border-b-2 border-transparent nav-link">A Vaga</a>
+                <a href="#perfil" class="text-gray-600 font-medium border-b-2 border-transparent nav-link">Perfil Ideal</a>
+                <a href="#responsabilidades" class="text-gray-600 font-medium border-b-2 border-transparent nav-link">Responsabilidades</a>
+                <a href="#remuneracao" class="text-gray-600 font-medium border-b-2 border-transparent nav-link">Remuneração</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 md:py-20">
+        
+        <section id="vaga" class="text-center mb-20">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">Vaga: Vendedor Interno (CLT)</h2>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                A Moby Representações está em busca de um profissional de vendas dinâmico e experiente para fortalecer nossa equipe! Se você tem paixão por vendas, conhecimento no setor de ferragens e ferramentas, e busca uma oportunidade para crescer, esta vaga é para você.
+            </p>
+            <!-- Hidden job description for LLM context -->
+            <div id="jobDescription" class="hidden">
+                Vaga: Vendedor Interno (CLT)
+                MOBY REPRESENTAÇÕES está contratando um Vendedor Interno para integrar sua equipe. Se você possui experiência em vendas ativas e conhecimento no segmento de ferragens e ferramentas, esta pode ser a sua oportunidade!
+
+                Requisitos Essenciais:
+                Experiência comprovada em vendas ativas/televendas.
+                Conhecimento em ferragens e ferramentas (conhecer ferragens para móveis é um grande diferencial).
+                Experiência com CRM.
+                Perfil proativo.
+                Organização.
+                Bom relacionamento interpessoal.
+                Diferenciais:
+                Familiaridade com mídias sociais e divulgação de produtos.
+                Funções:
+                Realizar vendas internas ativas para revendedores e indústrias dos segmentos moveleiro, construção civil, ferragens e ferramentas.
+                Reativar clientes inativos e realização de prospecção ativa.
+                Elaborar propostas e orçamentos.
+                Realizar a implantação de pedidos.
+                Registrar todos os atendimentos via CRM.
+                Realizar pós-vendas.
+                Atuar na resolução de problemas.
+                Remuneração e Benefícios:
+                Salário Fixo: R$ 2.058,00
+                Vale Alimentação (V.A): R$ 20,00 por dia
+                Vale Transporte
+                Comissão Progressiva
+                Prêmio por Assiduidade
+                Expediente:
+                De segunda a sexta-feira.
+                Horário: Das 08:00h às 12:00h e das 13:30h às 18:00h.
+                Observação:
+                Férias coletivas no final do ano.
+            </div>
+        </section>
+
+        <section id="perfil" class="mb-20">
+            <h3 class="text-3xl font-bold text-center mb-12 text-gray-800">O Que Buscamos em Você</h3>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card p-6 text-center">
+                    <div class="text-4xl mb-4 text-orange-600">💼</div>
+                    <h4 class="text-xl font-bold mb-2">Experiência Comprovada</h4>
+                    <p class="text-gray-600">Sólida vivência em vendas ativas e/ou televendas.</p>
+                </div>
+                <div class="card p-6 text-center">
+                    <div class="text-4xl mb-4 text-orange-600">🛠️</div>
+                    <h4 class="text-xl font-bold mb-2">Conhecimento Técnico</h4>
+                    <p class="text-gray-600">Familiaridade com ferragens e ferramentas. Conhecimento em ferragens para móveis é um grande diferencial.</p>
+                </div>
+                <div class="card p-6 text-center">
+                    <div class="text-4xl mb-4 text-orange-600">📈</div>
+                    <h4 class="text-xl font-bold mb-2">Domínio de CRM</h4>
+                    <p class="text-gray-600">Habilidade no uso de sistemas CRM para gestão de clientes.</p>
+                </div>
+                <div class="card p-6 text-center">
+                    <div class="text-4xl mb-4 text-orange-600">🚀</div>
+                    <h4 class="text-xl font-bold mb-2">Proatividade</h4>
+                    <p class="text-gray-600">Iniciativa para buscar novas oportunidades e soluções.</p>
+                </div>
+                <div class="card p-6 text-center">
+                    <div class="text-4xl mb-4 text-orange-600">🗂️</div>
+                    <h4 class="text-xl font-bold mb-2">Organização</h4>
+                    <p class="text-gray-600">Capacidade de gerenciar tarefas e informações de forma eficiente.</p>
+                </div>
+                <div class="card p-6 text-center">
+                    <div class="text-4xl mb-4 text-orange-600">🤝</div>
+                    <h4 class="text-xl font-bold mb-2">Bom Relacionamento</h4>
+                    <p class="text-gray-600">Excelente comunicação e facilidade para construir relacionamentos.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="responsabilidades" class="mb-20 bg-white rounded-xl shadow-lg p-8 md:p-12">
+            <h3 class="text-3xl font-bold text-center mb-12 text-gray-800">Suas Principais Responsabilidades</h3>
+            <div class="grid md:grid-cols-2 gap-x-8 gap-y-10 max-w-4xl mx-auto">
+                <div class="flex items-start space-x-4">
+                    <div class="text-2xl text-orange-600 mt-1">✓</div>
+                    <div>
+                        <h4 class="font-bold text-lg">Vendas Ativas</h4>
+                        <p class="text-gray-600">Para revendedores e indústrias dos segmentos moveleiro, construção civil, etc.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-4">
+                    <div class="text-2xl text-orange-600 mt-1">✓</div>
+                    <div>
+                        <h4 class="font-bold text-lg">Prospecção e Reativação</h4>
+                        <p class="text-gray-600">Reativar clientes inativos e prospectar novos negócios.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-4">
+                    <div class="text-2xl text-orange-600 mt-1">✓</div>
+                    <div>
+                        <h4 class="font-bold text-lg">Propostas e Orçamentos</h4>
+                        <p class="text-gray-600">Elaborar propostas e orçamentos detalhados e precisos.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-4">
+                    <div class="text-2xl text-orange-600 mt-1">✓</div>
+                    <div>
+                        <h4 class="font-bold text-lg">Gestão de Pedidos</h4>
+                        <p class="text-gray-600">Garantir a implantação de pedidos de forma eficiente.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-4">
+                    <div class="text-2xl text-orange-600 mt-1">✓</div>
+                    <div>
+                        <h4 class="font-bold text-lg">Registro em CRM</h4>
+                        <p class="text-gray-600">Registrar todos os atendimentos e interações com clientes.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-4">
+                    <div class="text-2xl text-orange-600 mt-1">✓</div>
+                    <div>
+                        <h4 class="font-bold text-lg">Pós-vendas e Suporte</h4>
+                        <p class="text-gray-600">Assegurar a satisfação do cliente e atuar na resolução de problemas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="remuneracao" class="mb-20">
+            <h3 class="text-3xl font-bold text-center mb-4 text-gray-800">Remuneração e Benefícios</h3>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Oferecemos um pacote competitivo e a oportunidade de aumentar seus ganhos através de comissões progressivas. Use o simulador abaixo para ter uma ideia do seu potencial.</p>
+            
+            <div class="grid lg:grid-cols-5 gap-8 items-center">
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="card p-4 flex justify-between items-center">
+                        <span class="font-medium">Salário Fixo:</span>
+                        <span class="font-bold text-lg text-orange-600">R$ 2.058,00</span>
+                    </div>
+                    <div class="card p-4 flex justify-between items-center">
+                        <span class="font-medium">Vale Alimentação (mensal):</span>
+                        <span class="font-bold text-lg text-orange-600">R$ 440,00</span>
+                    </div>
+                    <div class="card p-4 flex justify-between items-center">
+                        <span class="font-medium">Benefícios Adicionais:</span>
+                        <span class="font-bold text-lg text-orange-600">VT + Prêmios</span>
+                    </div>
+                     <div class="card p-6 bg-orange-50 border-2 border-orange-200">
+                        <label for="performanceSlider" class="block font-medium text-center mb-2">Simule seu Desempenho de Vendas (em % do alvo de 1M):</label>
+                        <input id="performanceSlider" type="range" min="0" max="100" value="0" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                        <div class="text-center mt-4">
+                            <p class="text-gray-700">Volume de Vendas Estimado:</p>
+                            <p id="estimatedSalesVolume" class="text-xl font-bold text-orange-600">R$ 0,00</p>
+                            <p class="text-gray-700 mt-2">Remuneração Total Estimada:</p>
+                            <p id="totalRemuneration" class="text-3xl font-extrabold text-orange-700">R$ 0,00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-3">
+                    <div class="chart-container">
+                        <canvas id="remunerationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="detalhes" class="text-center bg-white rounded-xl shadow-lg p-8 md:p-12 mb-20">
+             <h3 class="text-3xl font-bold text-center mb-8 text-gray-800">Expediente e Informações Adicionais</h3>
+             <div class="flex flex-col md:flex-row justify-center items-center gap-8">
+                 <div>
+                     <h4 class="font-bold text-lg">Jornada de Trabalho</h4>
+                     <p class="text-gray-600">De segunda a sexta-feira</p>
+                     <p class="text-gray-600 font-mono">08:00h às 12:00h | 13:30h às 18:00h</p>
+                 </div>
+                 <div class="w-px h-16 bg-gray-300 hidden md:block"></div>
+                 <div>
+                     <h4 class="font-bold text-lg">Férias</h4>
+                     <p class="text-gray-600">Férias coletivas no final do ano para recarregar as energias!</p>
+                 </div>
+             </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-900 text-white mt-20">
+        <div class="container mx-auto px-6 py-12 text-center">
+            <h3 class="text-2xl font-bold mb-4">Venha Fazer Parte da Equipe Moby!</h3>
+            <p class="max-w-xl mx-auto mb-8">Se você se identifica com esta oportunidade e preenche os requisitos, envie seu currículo e venha construir uma carreira de sucesso conosco.</p>
+            <a href="mailto:lucas@mobyrepresentacoes.com.br?subject=Vaga Vendedor Interno" class="bg-orange-600 text-white font-bold py-3 px-8 rounded-full text-lg cta-button inline-block">
+                Candidate-se Agora
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        console.log("Script carregado e iniciando.");
+        document.addEventListener('DOMContentLoaded', function () {
+            const fixedSalary = 2058.00;
+            const dailyVA = 20.00;
+            const monthlyVA = dailyVA * 22; // Assuming 22 working days in a month
+            const baseRemuneration = fixedSalary + monthlyVA;
+
+            const maxSalesTarget = 1000000; // R$ 1,000,000.00
+            
+            const commissionTiers = [
+                { sales: 200000, rate: 0.0050 }, // 0.50%
+                { sales: 300000, rate: 0.0055 }, // 0.55%
+                { sales: 400000, rate: 0.0060 }, // 0.60%
+                { sales: 500000, rate: 0.0065 }, // 0.65%
+                { sales: 600000, rate: 0.0070 }, // 0.70%
+                { sales: 700000, rate: 0.0075 }, // 0.75%
+                { sales: 800000, rate: 0.0080 }, // 0.80%
+                { sales: 900000, rate: 0.0090 }, // 0.90%
+                { sales: 1000000, rate: 0.0100 } // 1.00%
+            ];
+
+            const slider = document.getElementById('performanceSlider');
+            const totalRemunerationEl = document.getElementById('totalRemuneration');
+            const estimatedSalesVolumeEl = document.getElementById('estimatedSalesVolume');
+            
+            const ctx = document.getElementById('remunerationChart').getContext('2d');
+            const remunerationChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Salário Fixo + VA', 'Comissão Estimada'],
+                    datasets: [{
+                        label: 'Remuneração (R$)',
+                        data: [baseRemuneration, 0],
+                        backgroundColor: [
+                            'rgba(249, 115, 6, 0.8)', /* Orange-500 with alpha */
+                            'rgba(234, 88, 12, 0.8)'  /* Orange-600 with alpha */
+                        ],
+                        borderColor: [
+                            'rgba(249, 115, 6, 1)', /* Orange-500 */
+                            'rgba(234, 88, 12, 1)'  /* Orange-600 */
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Valor em R$'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.x !== null) {
+                                        label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed.x);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            function calculateCommission(salesVolume) {
+                let commissionRate = 0;
+                for (let i = commissionTiers.length - 1; i >= 0; i--) {
+                    if (salesVolume >= commissionTiers[i].sales) {
+                        commissionRate = commissionTiers[i].rate;
+                        break;
+                    }
+                }
+                return salesVolume * commissionRate;
+            }
+
+            function updateRemuneration() {
+                const performancePercentage = parseInt(slider.value);
+                const currentSalesVolume = (performancePercentage / 100) * maxSalesTarget;
+                const estimatedCommission = calculateCommission(currentSalesVolume);
+                const totalRemuneration = baseRemuneration + estimatedCommission;
+                
+                estimatedSalesVolumeEl.textContent = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(currentSalesVolume);
+                totalRemunerationEl.textContent = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalRemuneration);
+                
+                remunerationChart.data.datasets[0].data[0] = baseRemuneration;
+                remunerationChart.data.datasets[0].data[1] = estimatedCommission;
+                remunerationChart.update();
+            }
+
+            slider.addEventListener('input', updateRemuneration);
+            
+            updateRemuneration();
+        });
+    </script>
+</body>
+</html>
